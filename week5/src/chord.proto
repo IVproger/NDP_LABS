@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+// The Chord service definition
+service Chord {
+  rpc SaveData(SaveDataMessage) returns (DataResponse) {}
+  rpc RemoveData(RemoveDataMessage) returns (DataResponse) {}
+  rpc FindData(FindDataMessage) returns (FindDataResponse) {}
+  rpc GetFingerTable(GetFingerTableMessage) returns (FingerTableResponse) {}
+}
+
+// The message containing the key-value pair to be stored
+message SaveDataMessage {
+  string key = 1;
+  string text = 2;
+}
+
+// The message containing the key to be removed
+message RemoveDataMessage {
+  string key = 1;
+}
+
+// The message containing the key to be retrieved
+message FindDataMessage {
+  string key = 1;
+}
+
+// The message for getting the finger table
+message GetFingerTableMessage {
+}
+
+// The message containing the result of a SaveData or RemoveData operation
+message DataResponse {
+  bool status = 1;
+  int32 node_id = 2;
+  int32 key = 3;  // The hashed key
+}
+
+// The message containing the result of a FindData operation
+message FindDataResponse {
+  string data = 1;
+  int32 node_id = 2;
+}
+
+// The message containing the finger table
+message FingerTableResponse {
+  repeated int32 finger_table = 1;
+}
